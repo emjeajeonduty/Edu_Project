@@ -1,43 +1,71 @@
 import 'cypress-xpath';
 
-const URL = "https://sso.garena.com/universal/login?app_id=10100&redirect_uri=https%3A%2F%2Faccount.garena.com%2F&locale=id-ID";
-const v_username = "qaedutest";
-const v_password = "cobaTesting@123";
-const inv_username = "unSalah123";
-const inv_password = "pwSalah123";
-const unField = "[placeholder='Username Garena / E-Mail / Nomor Handphone']";
-const pwField = "[placeholder='Password']";
-const lupaPw = ".forgot";
-const btnLogin = ".primary";
-const logo = ".hd-logo";
-const erMessage = ".message";
+const URL = "https://magento.softwaretestingboard.com/";
+const loginMenu = ".header.panel [href='https://magento.softwaretestingboard.com/customer/account/login/referer/aHR0cHM6Ly9tYWdlbnRvLnNvZnR3YXJldGVzdGluZ2JvYXJkLmNvbS8%2C/']";
+//assertion
+const assertLogo = "[src='https://magento.softwaretestingboard.com/pub/static/version1695896754/frontend/Magento/luma/en_US/images/logo.svg']";
+const assertFailMessage = "[data-bind='html: $parent.prepareMessageForHtml(message.text)']";
+const s_forgotEmail = "[data-bind='html: $parent.prepareMessageForHtml(message.text)']"
+//Login
+const lp_emailField = "#email";
+const lp_pwField = "[name='login[password]']";
+const lp_signInBtn = ".login[name='send'] > span";
+const lp_forgotBtn = ".remind > span";
+//Forgot
+const fp_emailField = "#email_address";
+const fp_forgotBtn = ".submit";
+
+
 
 class data {
+    //visitUrl
     static visitURL(){
         cy.visit(URL);
     }
-
-    static typeUn(username){
-        cy.get(unField).type(username);
+    
+    //assertion
+    static assertionLogo(){
+        cy.get(assertLogo).should('be.visible');
+    }
+    static assertionFailed(){
+        cy.get(assertFailMessage).should('be.visible');
     }
 
-    static typePw(password){
-        cy.get(pwField).type(password);
+    static assertionForgot_s(){
+        cy.get(s_forgotEmail).should('be.visible');
     }
 
-    static lupaPwForm(){
-        cy.get(lupaPw).click();
+    //LoginMenu
+    static goToLoginPage(){
+        cy.get(loginMenu).click();
+    }
+    //uname & password
+    static typeEmail(email){
+        cy.get(lp_emailField).type(email);
+    }
+    static typePwd(password){
+        cy.get(lp_pwField).type(password);
     }
 
-    static login(){
-        cy.get(btnLogin).click();
+    //ForgotMenu
+    static goToLoginPage(){
+        cy.get(loginMenu).click();
     }
 
-    static sLogin(){
-        cy.get(logo).should('be.visible');
+    //signIn & forgot menu
+    static signIn(){
+        cy.get(lp_signInBtn).click();
     }
-    static eLogin(){
-        cy.get(erMessage).should('be.visible');
+    static forgotPwd(){
+        cy.get(lp_forgotBtn).click();
+    }
+    //email type
+    static typeEmail(email){
+        cy.get(fp_emailField).type(email);
+    }
+    //
+    static sbmt_forgotPwd(){
+        cy.get(fp_forgotBtn).click();
     }
 
 }
